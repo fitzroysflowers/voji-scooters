@@ -1,0 +1,42 @@
+extends layouts/layout-bare
+
+block head
+    link(rel="stylesheet" href="/stylesheets/swiper-bundle.css")
+    link(rel="stylesheet" href="/stylesheets/sliders.css")
+    script(src="/js/swiper-bundle.js")
+
+
+block content  
+  .swiper-container.colour-slides
+    // Additional required wrapper
+    .swiper-wrapper
+      // Slides
+      .swiper-slide.slide1 
+        a(href='/buy-full.html', target='main') buy now >
+      .swiper-slide.slide2
+        a(href='/buy-full.html', target='main') buy now >
+      .swiper-slide.slide3
+        a(href='/buy-full.html', target='main') buy now >
+      .swiper-slide.slide4
+        a(href='/buy-full.html', target='main') buy now >
+    // If we need pagination
+    .swiper-pagination
+    // If we need navigation buttons
+    //-.swiper-button-prev
+    //-.swiper-button-next
+    // If we need scrollbar
+    .swiper-scrollbar
+
+
+
+block scripts
+  script.
+    var vsWidth = window.innerWidth
+      , options = {
+        direction: 'horizontal'
+        , pagination: {
+          el: '.swiper-pagination'
+        }
+      }
+    if( vsWidth > 1200 ) options.slidesPerView = 4;
+    var mySwiper = new Swiper ('.swiper-container', options)

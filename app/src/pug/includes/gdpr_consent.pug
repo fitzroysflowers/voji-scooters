@@ -1,0 +1,43 @@
+if !gdprConsent
+  .gdpr-consent
+    p We use cookies and other tracking technologies to improve your browsing experience on our site, show personalised content, analyse site traffic, and understand where our audience is coming from. To find out more or to opt-out, please read our 
+      a(href='/cookies') Cookie Policy. 
+      | In addition, please read our 
+      a(href='/privacy') Privacy Policy. By choosing 
+      b I Accept 
+      | below, you consent to our use of cookies and other tracking technologies.
+    form( action='/cookies', method='POST' )
+      input( type='submit', value='I Accept' )
+
+script.
+  ( function() {
+    var gdprConsent = {
+      init: function( config ) {
+        this.config = config
+        this.form = this.config.form
+        this.bind()
+      },
+      submit: function( e ) {
+        e.preventDefault()
+        var xhr = new XMLHttpRequest()
+          , form = this.form
+        xhr.open( 'POST', '/cookies', true )
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+        xhr.onreadystatechange = function() {
+          if( xhr.readyState===4 ) {
+            if( xhr.status===200 ) {
+              form.parentElement.classList.add('accepted')
+            }
+          }
+        }
+        xhr.send()
+      }, 
+      bind: function() {
+        this.form.addEventListener( 'submit', this.submit.bind( this ) )
+      }
+    }
+
+    gdprConsent.init( {
+      form: document.querySelector( 'form[action="/cookies"]' )
+    } )
+  } )()

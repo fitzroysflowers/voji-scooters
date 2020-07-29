@@ -1,0 +1,103 @@
+@import 'sizes'
+@import 'mixins'
+
+.colour-slides
+  width 100%
+  height 100vmin
+  background-color white
+  overflow hidden
+  .swiper-scrollbar
+    display none
+  .swiper-pagination-bullet
+    background-color grey
+  .swiper-wrapper
+    height 100%
+    .swiper-slide
+      height 100%
+      background-repeat no-repeat
+      background-size 70%
+      background-position center center
+      a
+        position absolute
+        top 18vmin
+        left 6vmin
+        color #A80A13 
+      &::after
+        position absolute
+        display inline-block
+        left 0
+        top 8vmin
+        text-align left
+        text-transform uppercase
+        font-weight 600
+        padding micro-size
+        border-radius(2vw)
+        background-color rgba(0,0,0,0.1)
+        margin-left med-size
+    .slide1
+      background-image url(/images/display/red.png)
+      &::after
+        content 'Racing Red'
+        color red
+    .slide2
+      background-image url(/images/display/silver.png)
+      &::after
+        content 'Sterling Silver'
+        color silver
+    .slide3
+      background-image url(/images/display/white.png)
+      &::after
+        content 'Arctic White'
+        color white
+    .slide4
+      background-image url(/images/display/black.png)
+      &::after
+        content 'Midnight Black'
+        color black
+
+.env-slides
+  width 100%
+  height 100%
+  .swiper-pagination-bullet
+    background-color grey
+    margin-top 5vh
+  .swiper-wrapper
+    height 100vh
+    .swiper-slide
+      height 100%
+      background-repeat no-repeat
+      background-size 80%, cover
+      background-position center 40vh, bottom center
+    .slide1
+      background-image url(/images/display/white-side.png), url(/images/display/blue_background.png)
+    .slide2
+      background-image url(/images/display/red-side.png), url(/images/display/yellow_background.png)
+    .slide3
+      background-image url(/images/display/grey-side.png), url(/images/display/gree_backdrop.png)
+    .slide4
+      background-image url(/images/display/black-side.png), url(/images/display/backgroud_red.png)
+
+@media screen and ( orientation:landscape ) and ( min-width:1200px )
+  .colour-slides
+    height 100vmin
+    .swiper-wrapper
+      .swiper-slide
+        width 100vw
+        height 35vw
+        a
+          font-size fly-size
+          top 8vmin
+          left 4vmin
+        &::after
+          top 5vmin
+          border-radius(2vw)
+          margin-left small-size
+          padding micro-size fly-size
+          font-size micro-size
+
+  .env-slides
+    .swiper-wrapper
+      .swiper-slide
+        width 50vw !important
+        background-size 70%, cover
+        background-position center center, bottom center

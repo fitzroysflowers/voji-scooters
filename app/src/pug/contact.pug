@@ -1,0 +1,26 @@
+extends layouts/layout
+
+block head
+
+block content
+  form()#notify
+    input(type='hidden', name='emailtype', value='Contact form')
+    fieldset#contact
+      legend Contact us
+      ul
+        li
+          label
+            p Name
+            input(required, type='text', name='name' )
+        li
+          label
+            p Email
+            input(required, type='email', name='email' )
+        li
+          label
+            p message
+            textarea(required, name='message')
+        li
+          input(type="submit", value="Send")
+block scripts
+  script( src="/js/lambda-email.js" )

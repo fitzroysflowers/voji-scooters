@@ -1,0 +1,10 @@
+extends layouts/layout-video
+
+block head
+
+block content
+  video( playsinline autoplay loop muted poster='/images/display/mqi-bikes-journey.jpg'  )#marketing-video
+    source( src='/videos/mqi-bikes-journey.mp4', type="video/mp4" )
+    source( src='/videos/mqi-bikes-journey.webm', type="video/webm" )
+
+block scripts

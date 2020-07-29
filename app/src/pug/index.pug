@@ -1,0 +1,125 @@
+extends layouts/layout
+
+block head
+  // Hotjar Tracking Code for Www.MQi-bikes.com
+  script.
+    (function(h,o,t,j,a,r){
+    h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+    h._hjSettings={hjid:1863716,hjsv:6};
+    a=o.getElementsByTagName('head')[0];
+    r=o.createElement('script');r.async=1;
+    r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+    a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+
+block content
+  section#hero
+    .hero-logo
+    h1 Electric folding e-scooters
+    .hero-footer  
+      p.fly Superior Engineering from just
+      p £695
+      a(href='/buy-full.html').hero-buy BUY NOW
+
+  section#features
+    h2 RKS 
+      span Features
+
+  section#icons
+    h2 Excellence by design
+    p Powerful, Efficient and Economical
+    ul
+      li
+        h3 Transmission
+        p Electronic
+      li
+        h3 Battery
+        p LG Li-ion 36V 7.8Ah
+      li
+        h3 Engine
+        p RKS 250W
+
+  section#pills
+    ul
+      li 
+        h3 25 
+          span km/h
+        p Maximum speed
+      li 
+        h3 28 
+          span KM
+        p Range
+      li 
+        h3 3-4 
+          span hours
+        p Charging Time
+      li 
+        h3 250 
+          span watt
+        p Maximum Power
+
+  section#gallery
+    input(type='radio', name='toggle', checked='checked')#toggle1
+    input(type='radio', name='toggle')#toggle2
+    .display
+    label(for='toggle1')
+    label(for='toggle2')
+    a(href='/buy-full.html') Buy now >
+
+  section#difference
+    h2 The Voji Difference
+    p Even though cheaper e-scooters are available, they are not engineered to deliver a riding experience like a Voji. 
+    p When riding, sometimes you might need to stop quickly - and Voji’s scooter wont let you down with its’ top quality electronic disk brakes, both front and rear. Safe riding is priceless. 
+    p Equally, if you want to accelerate quickly ahead of other road users, Voji RKS 250w  motor has the power that you need, and that many other scooters simply don't have. 
+    p To ensure you arrive at your destination refreshed - as opposed to shaken & stirred by every little bit of uneveness that you will find from point A to point B on your journey; Voji uses with large 8.5 inch, high quality fat tyres and an aluminium chassis to keep the ride smooth. 
+    p With other high quality scooters selling for £1200+ we think Voji offers excellent value in the marketplace. Used regularly, a cheaper scooter may possibly only last for a few months. You might also lack the safe assured feeling of riding a solidly made machine. Riding a Voji will give you pleasure and the riding confidence of travelling on a well engineered vehicle for many years to come. 
+    p So if you are going to go for a ride - you may as well make the most out of it. 
+    p Find your way. Voji. 
+    p.fly *Please note that the Voji RKS scooter is EN15194  compliant making it legal to ride on UK roads
+
+  section#controls
+  
+  section#specs
+    h2 Full Specifications
+    ul
+      li
+        p Engine 
+          span RKS 250w
+      li
+        p Battery 
+          span LG Li-ion 36V 7.8Ah
+      li
+        p Incline Capability 
+          span 12%
+      li
+        p Traction System 
+          span Front Wheel Drive
+      li
+        p Top Speed 
+          span 25km/h
+      li
+        p Chassis 
+          span Aluminium
+      li
+        p Charging Voltage 
+          span 42V 1.5A
+      li
+        p Front/Rear Break 
+          span Electronic/Disc
+      li
+        p Tire 
+          span 8.5"
+      li
+        p Water Resistant 
+          span IPX4
+      li
+        p Front 
+          span Fork
+      li
+        p Net Weight 
+          span 11.8kg
+      li
+        p Maximum Weight 
+          span 100Kg
+
+block scripts

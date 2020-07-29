@@ -1,0 +1,927 @@
+@import 'reset.css'
+@import 'colours'
+@import 'fonts'
+@import 'sizes'
+@import 'mixins'
+
+html
+  font-size 120%
+  min-height 100vh
+
+div, a, form, input, textarea, section, article, ul, li, label
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+body
+  color black
+  font small-size font-corp
+  font-weight 400
+  min-height 100vh
+  -webkit-font-smoothing antialiased
+	-moz-osx-font-smoothing grayscale
+
+a
+  color: inherit
+
+.underline
+  text-decoration underline
+
+p, a, li
+  font med-size/med-size*1.33 font-corp
+
+.destroy
+  background-color alert-error-col !important
+
+.fly
+  font-size fly-size
+  line-height small-size
+
+.bold
+  font-weight 800
+
+hr
+  border none
+  background-color #eee
+  height 1px
+
+h1
+  font-size large-size
+  font-weight 600
+
+
+h2
+  font-size med-size
+  margin-bottom med-size
+  margin-top med-size
+  font-weight 600
+
+h3
+  font-size med-size
+
+hr
+  border 0
+  height 1px
+  //background-image linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.75), rgba(0, 0, 0, 0))
+  border-top solid thin second-col
+
+section
+  position relative
+  width 100vw
+
+.btn
+  btn()
+  display block
+  width 100%
+  margin med-size 0
+
+.fly
+  font 
+
+.header
+  position fixed
+  left 0
+  right 0
+  top 0
+  height title-size*1.25
+  background-color rgba(0,0,0,0.5)
+  .logo
+    height title-size
+    width 40vmin
+    background-image url(/images/svg/voji_logo.svg)
+    background-repeat no-repeat
+    background-position left center
+    background-size auto 80%
+    margin fly-size small-size
+  .nav
+    display none
+    width 100%
+    background-color background
+    color white
+    padding large-size
+    li
+      a
+        p
+          line-height title-size
+
+#menu-reveal
+  display none
+#menu-reveal + label
+  height 100%
+  float right
+  margin-top small-size
+  margin-right small-size
+#menu-reveal + label:after
+  content '\f0c9'
+  font-family 'fontawesome'
+  font-size large-size
+  color white
+#menu-reveal:checked + label:after
+  content '\f00d'
+#menu-reveal:checked ~ .nav
+    display block
+
+.text-wrapper
+  padding large-size
+  padding-top title-size*2
+
+#hero
+  height 180vmin
+  background-image url( /images/display/e-scooters_frame_1.png ), url( /images/display/background_grey2.jpg ) 
+  background-repeat no-repeat
+  background-size contain, cover
+  background-position bottom center, center center
+  video
+    width 100%
+    height 100%
+    object-fit cover
+    overflow hidden
+  h1
+    position absolute
+    top title-size*3
+    left 0
+    right 0
+    font-size med-size
+    text-align center
+    text-transform uppercase
+    color white
+  .footnote
+    position absolute
+    left small-size
+    bottom fly-size
+    font-size fly-size
+    color white
+  .hero-logo
+    position absolute
+    top small-size
+    width 100%
+    height 40vw
+    background-image url( /images/svg/rks_logo_rev.svg )
+    background-repeat no-repeat
+    background-position center center
+    background-size 60%
+  .hero-footer
+    position absolute
+    left 0
+    right 0
+    bottom small-size
+    text-align center
+    padding-bottom fly-size
+    p
+      font-size large-size
+      line-height large-size
+      color white
+      text-transform uppercase
+    .fly
+      font-size fly-size
+      line-height large-size
+      font-weight 800
+
+    .hero-buy
+      btn()
+      display inline-block
+      width 80%
+      background-color #CB0000
+      margin-bottom small-size
+
+#features
+  background-image url( /images/display/features.jpg )
+  background-repeat no-repeat
+  background-size contain
+  background-position center center
+  h2
+    font-size large-size
+    text-align center
+    text-transform uppercase
+    aspect(130%)
+    color red
+    span
+      color black
+
+#pills
+  padding small-size
+  background-color #aaa
+  p
+    font-size med-size
+    font-weight 800
+    text-align center
+    text-transform uppercase
+    margin-top small-size
+    span
+      text-decoration underline
+  ul
+    li
+      display inline-block
+      background-color #eee
+      border-radius( 1rem )
+      text-align center
+      padding small-size
+      color black
+      width 50%
+      text-transform uppercase
+      border #aaa solid thick
+      h3
+        font-weight 800
+        font-size large-size
+        span
+          font-weight 300
+          font-size fly-size
+        padding-bottom micro-size
+        border-bottom black solid thin
+      p
+        margin-top fly-size
+        font-weight 300
+
+#gallery
+  input
+    display none
+  a
+    position absolute
+    top title-size*1.5
+    left small-size
+    color red
+  .display
+    background-image url( /images/display/profile_black2.png )
+    background-size contain
+    aspect(100%)
+    &::before
+      content ''
+      position absolute
+      top title-size
+      left small-size
+      font-weight 800
+      text-transform uppercase
+
+  label
+    display inline-block
+    height title-size*3
+    width 50%
+    background-image url( /images/display/profile_black2.png )
+    background-repeat no-repeat
+    background-position center center
+    background-size contain
+  label + label
+    background-image url( /images/display/profile_white.png )
+
+  #toggle1:checked ~ .display
+    background-image url( /images/display/profile_black2.png )
+  #toggle2:checked ~ .display
+    background-image url( /images/display/profile_white.png )
+  #toggle1:checked ~ .display::before
+    content 'Black Frame'
+  #toggle2:checked ~ .display::before
+    content 'white Frame'
+
+#icons
+  padding small-size
+  background-color #aaa
+  h2
+    text-transform uppercase
+    text-align center
+    margin-bottom micro-size
+    font-size large-size
+    color #eee
+    & + p
+      text-transform uppercase
+      text-align center
+      font-weight 800
+      margin-bottom large-size
+  ul
+    li
+      display table-cell
+      width 33%
+      background-color #eee
+      padding fly-size
+      border solid thick #aaa
+      border-radius( 1rem )
+      text-align center
+      h3
+        font-size small-size*0.6
+        font-weight 800
+        border-bottom solid thin black
+        text-transform uppercase
+      &::before
+        content ''
+        display block
+        height title-size*1
+        width 100%
+        background-repeat no-repeat
+        background-size contain
+        background-position center center
+      &:nth-child(1)::before
+        background-image url( /images/svg/22_gear.svg )
+      &:nth-child(2)::before
+        background-image url( /images/svg/23_battery.svg )
+      &:nth-child(3)::before
+        background-image url( /images/svg/24_motor.svg )
+
+#difference
+  padding small-size
+  background-color background
+  h2
+    font-size large-size
+    text-align center
+    text-transform uppercase
+    color red
+  p
+    color white
+    margin-bottom small-size
+
+#controls
+  background-color blue
+  background-image url( /images/display/controls.png )
+  background-repeat no-repeat
+  background-size cover
+  aspect(80%)
+
+#specs
+  padding med-size
+  h2
+    font-size large-size
+    text-align center
+    text-transform uppercase
+    color black
+  ul
+    li
+      text-align center
+      p
+        color black
+        font-weight 800
+        span
+          font-weight 300
+
+#slide-colour
+  position relative
+  width 100%
+  height 100vw
+  Background-color white
+  iframe
+    width 100%
+    height 100vw
+    overflow hidden
+
+#slide-env
+  position relative
+  width 100%
+  height 120vw
+  iframe
+    position relative
+    width 100%
+    height 100%
+  .buy-now
+    position absolute
+    top title-size*4
+    left med-size
+    font-size med-size
+    color red
+    &::after
+      content '\f054'
+      font-family 'fontawesome'
+      margin-left fly-size
+      color black
+  p
+    position absolute
+    top med-size
+    left med-size
+    right med-size
+    font-size med-size*1.3
+    line-height large-size
+    color white
+    span
+      display block
+      font-size med-size
+
+#commute
+  position relative
+  background-color white
+  background-repeat no-repeat
+  padding title-size*1.2 small-size
+  .text
+    text-align center
+    max-width 900px
+    margin auto auto
+    h1
+      color #A80A13
+    h2
+    p
+      margin-bottom med-size
+      color black
+    .btn
+      Background-color #A80A13
+
+#technology
+  position relative
+  background-color background
+  background-repeat no-repeat
+  padding title-size*1.2 small-size
+  .text
+    text-align center
+    p
+      font-weight 600
+      margin-bottom med-size
+      color white
+    p + p
+      color red
+    ul
+      li
+        color white
+
+#table
+  background-color background
+  text-align center
+  table
+    width 100%
+    padding med-size
+    thead
+      tr
+        th
+          width 33%
+          p
+            padding small-size micro-size
+            color white
+    tbody
+      tr
+        td
+          p
+            padding small-size micro-size
+            color #CB0000
+            font-size large-size
+
+
+    ul
+      li
+        line-height large-size
+        color white
+
+#parts
+  position relative
+  background-color white
+  background-image url(/images/display/exploded-diagram.jpg)
+  background-size contain !important
+  background-position top !important
+  aspect(165%)
+  .text
+    position absolute
+    top title-size*9
+    left large-size
+    right large-size
+    text-align center
+    color grey
+    margin-bottom med-size
+    p, span
+      font-size med-size
+      line-height med-size*1.6
+      margin-bottom med-size
+    .bold
+      font-weight 600
+    .buy-now
+      display block
+      margin med-size
+      font-size med-size
+      color red
+      &::after
+        content '\f054'
+        font-family 'fontawesome'
+        margin-left fly-size
+
+#licence
+  position relative
+  background-image linear-gradient(to bottom, background 0%, transparent 75% )
+  aspect(180%)
+  &::after
+    content ''
+    background-image url(/images/display/black.png)
+    background-size 90%
+    background-repeat no-repeat
+    background-position bottom
+
+  .text
+    position absolute
+    top large-size
+    left large-size
+    right large-size
+    text-align center
+    color white
+    p
+      font-size med-size
+      line-height med-size*1.6
+      margin-bottom med-size
+    .bold
+      font-size med-size
+      line-height med-size*1.6
+      font-weight 600
+      
+.footer
+  background-color white
+  text-align center
+  padding small-size
+  p
+    font-size small-size
+    line-height small-size
+    color black
+
+form
+  margin title-size*1.3 med-size
+  text-align left !important
+  .secure-icons
+    position relative
+    display block
+    width 100%
+    height title-size
+    &::before
+      content ''
+      position absolute
+      top 0
+      right title-size*1.3
+      display block
+      background-image url(/images/display/secure.jpg)
+      background-repeat no-repeat
+      background-position center right
+      background-size contain
+      height 100%
+      width 100%
+    &::after
+      content ''
+      position absolute
+      top med-size
+      right 0
+      display block
+      background-image url(/images/display/ssl_enctryption.png)
+      background-repeat no-repeat
+      background-position center right
+      background-size contain
+      height 30%
+      width 100%
+
+  fieldset
+    margin-top title-size
+    legend
+      display block
+      text-align center
+      font-size med-size
+      text-transform uppercase
+      font-weight 600
+      margin large-size 0
+      span
+        margin-left micro-size
+    #card-element,
+    #card-number,
+    #card-expiry,
+    #card-cvc,
+    #postal-code,
+    input[type=text],
+    input[type=tel],
+    input[type=email],
+    textarea
+      display block
+      appearance normal
+      width 100%
+      padding small-size
+      background-color white
+      color black
+      font-size med-size
+      border solid thin background
+      margin micro-size 0
+      border-radius(3px)
+    input[type=submit]
+      btn()
+      width 100% !important
+
+#select-colour
+  text-align center
+  input[type=radio]
+    display none
+  .order-colour
+    list-style none
+    li
+      position relative
+      display inline-block
+      label
+        position relative
+        display block
+        width title-size
+        height title-size
+        border-radius(50%)
+
+  fieldset
+    margin-top title-size
+    legend
+      display block
+      text-align center
+      font-size med-size
+      text-transform uppercase
+      font-weight 600
+      margin large-size 0
+      span
+        margin-left micro-size
+    #card-element,
+    #card-number,
+    #card-expiry,
+    #card-cvc,
+    #postal-code,
+    input[type=text],
+    input[type=tel],
+    input[type=email],
+    textarea
+      display block
+      appearance normal
+      width 100%
+      padding small-size
+      background-color white
+      color black
+      font-size med-size
+      border solid thin background
+      margin micro-size 0
+      border-radius(3px)
+    input[type=submit]
+      btn()
+      width 100%
+
+#select-colour
+  text-align center
+  input[type=radio]
+    display none
+  .order-colour
+    list-style none
+    li
+      position relative
+      display inline-block
+      label
+        position relative
+        display block
+        width title-size
+        height title-size
+        border-radius(50%)
+        background-color white
+        margin small-size
+        border-bottom outset #aaa thin
+        border-top outset #eee thin
+        &::after
+          content attr( data-col )
+          position absolute
+          display block
+          bottom -( large-size )
+          left 0
+          right 0
+          font-size fly-size
+          text-transform uppercase
+      label[for=colourred]
+        background-color #F03024
+      label[for=colourblue]
+        background-color #4788C4
+      label[for=colourblack]
+        background-color background
+      label[for=coloursilver]
+        background-color #bbb
+  #colourred:checked ~ .order-description::before
+    background-image url(/images/display/red.png)
+  #colourwhite:checked ~ .order-description::before
+    background-image url(/images/display/profile_white.png)
+  #coloursilver:checked ~ .order-description::before
+    background-image url(/images/display/silver.png)
+  #colourblack:checked ~ .order-description::before
+    background-image url(/images/display/profile_black2.png)
+  #colourred:checked ~ .order-colour li label[for=colourred]
+    border outset background thick
+  #colourwhite:checked ~ .order-colour li label[for=colourwhite]
+    border outset background thick
+  #coloursilver:checked ~ .order-colour li label[for=coloursilver]
+    border outset background thick
+  #colourblack:checked ~ .order-colour li label[for=colourblack]
+    border outset background thick
+    
+  .order-description
+    position relative
+    margin-top large-size
+    margin-bottom large-size
+    margin-left 50%
+    text-align left
+    li
+      input
+        display inline
+      p
+        font-size small-size
+        font-weight 600
+        span
+          font-weight 400
+          margin-left fly-size
+      &:first-child
+        p
+          font-weight 400
+    &::before
+      content ''
+      position absolute
+      background-image url(/images/display/colours_0003_IMG_4645.jpg)
+      background-repeat no-repeat
+      background-position center center
+      background-size contain
+      left -100%
+      height 100%
+      width 100%
+
+#add-address
+  ul
+    list-style none
+    li
+      display block
+      width 100%
+      padding small-size 0
+      label
+        p
+          margin small-size 0
+          font-weight 600
+          font-size small-size
+          text-transform uppercase
+      input[type=button]
+        btn()
+        display block
+        width 100%
+#finance
+  legend,
+  h2,
+  h3
+    display block
+    width 100%
+    text-align center
+  h2
+    font-size large-size
+    margin title-size 0
+    .fly
+      font-size small-size
+  p
+    margin med-size 0
+    text-align left
+  .hollow
+    background-color white
+    padding med-size
+    margin title-size 0
+    border solid prime-col thick
+    text-align center
+  .payment-plan
+    list-style initial
+    background-color #eee
+    text-align left
+    padding med-size
+    padding-left large-size
+    margin title-size 0
+    li
+      margin med-size 0
+  a
+    text-decoration underline
+  &::after
+    content ''
+    background-image url( /images/svg/klarna.svg )
+    background-repeat no-repeat
+    background-position center center
+    background-size contain
+    display block
+    height 1rem
+
+input[ type='submit' ]
+  display block
+  background-color green !important
+  width 100%
+
+#apply-msg
+  text-align center
+  margin large-size*2 med-size
+  h2
+    font-size large-size
+    line-height large-size
+    margin-bottom med-size
+  p
+    font-size med-size
+    line-height med-size
+
+#marketing-video 
+  position absolute
+  top title-size*1.25
+  bottom 0
+  left 0
+  right 0
+  max-width 100%
+  max-height 100%
+
+.social
+  margin large-size
+  li
+    display inline
+    .facebook::before
+      content '\f09a'
+      font-family 'fontawesome-brands'
+      font-size large-size
+
+@media screen and ( orientation:landscape ) and ( min-width:1200px )
+
+  form,
+  .text-wrapper
+    padding large-size
+    padding-top title-size*2
+    max-width 900px
+    margin auto auto
+    h2
+      font-size small-size
+    p
+      font-size fly-size
+  .header
+    height large-size
+    background-color background
+    .logo
+      height 70%
+      width 20vmin
+      margin-top micro-size
+    .nav
+      position absolute
+      top 0
+      right small-size
+      display block
+      width 50%
+      background-color transparent
+      padding 0
+      text-align right
+      li
+        display inline-block
+        padding fly-size
+        a
+          p
+            font-size fly-size
+            line-height fly-size
+            color white
+            &:hover
+              color white
+
+  #menu-reveal + label
+    display none
+
+  #hero
+    .centred
+      max-width 900px
+      text-align center
+      h1
+        font-size small-size
+        text-align center
+        text-transform uppercase
+        color white
+      .hero-buy
+        display inline-block
+        width 40%
+        margin-left 0
+        font-size fly-size
+        padding micro-size
+      .hero-logo
+        height 10min
+        background-size 80%
+    .hero-footer
+      bottom fly-size
+      padding-bottom 0
+      p
+        font-size med-size
+        line-height med-size
+        color white
+      .fly
+        font-size fly-size
+        line-height small-size
+
+  #slide-env,  
+  #slide-colour
+    position relative
+    width 100%
+    margin auto
+    background-color white
+    iframe
+      width 100%
+      height 50vw
+      overflow hidden
+
+  #slide-colour
+    height 16vw
+    margin-top 10vmin
+
+  #slide-env  
+    width 100%
+    height 50vw
+    background-color background
+    margin-top 30vmin
+
+  #technology
+    background-size contain !important
+    background-position top center
+    background-color background
+
+  #table
+    padding-left large-size
+    padding-right large-size
+    padding-bottom med-size
+    padding-top med-size
+
+  #licence
+    height 122vh
+    text-align left
+    aspect(60%)
+    &::after
+      background-position bottom right
+      background-size 50%
+      margin-right large-size
+    .text
+      width 40%
+      text-align left

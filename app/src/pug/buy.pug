@@ -1,0 +1,87 @@
+extends layouts/layout
+
+block head
+  form(action="/apply.php", method="POST")
+    fieldset#select-colour
+      legend Select Bike Colour
+      ul
+        li
+          input(required, type="radio", name="colour", value="white" )#colourwhite
+          label(for="colourwhite")
+        li
+          input(required, type="radio", name="colour", value="red" )#colourred
+          label(for="colourred")
+        li
+          input(required, type="radio", name="colour", value="blue" )#colourblue
+          label(for="colourblue")
+        li
+          input(required, type="radio", name="colour", value="black" )#colourblack
+          label(for="colourblack")
+    fieldset#add-address
+      legend Add Address
+      ul
+        li
+          label
+            p First Name:
+            input(required, type="text", name="fname" )
+        li                     
+          label               
+            p Last Name:     
+            input(required, type="text", name="lname" )
+        li                      
+          label                 
+            p Mobile:           
+            input( type="text", name="mobile" )
+        li                      
+          label                 
+            p Email:           
+            input( type="email", name="email" )
+        li                      
+          label                
+            p Address:        
+            input( type="text", name="address1" )
+            input( type="text", name="address2" )
+        li                      
+          label                 
+            p City:             
+            input( type="text", name="city" )
+        li                      
+          label                 
+            p County:           
+            input( type="text", name="county" )
+        li                      
+          label                 
+            p Postcode:         
+            input( type="text", name="postcode" )
+    fieldset#finance 
+      legend Flexible Finance
+      h2 Planned Payments Starting from £35.80pm.
+        .fly *Plus initial £89.50 deposit.
+
+      h3 Apply and get a decision instantly. No application needed for existing accounts.
+      p.hollow £35.80 pm for 36 months
+
+      ul.payment-plan
+        li
+          p Estimated total if you follow this plan: £1395.00
+        li
+          p First payment no earlier than the 25th of the month
+        li
+          p Promotional interest rate: 0%
+
+      p Subject to financial circumstances. You must be at least 18. Credit provided by Klarna Bank AB (publ), Sveavagen 46, 111 34 Stockholm, Sweden. You might be required to pay a deposit to complete this purchase. If you already have a Klarna Credit account, this purchase will be added to your balance. Not paying according to terms may cause your interest rate to increase as described in the representative example below.
+
+      p.bold Representative Example: Representative APR (variable) 18.9% with an assumed credit limit of £1,395 and a purchase rate of 18.9% p.a.
+
+      p By continuing I accept 
+        a(href='') Klarna’s User Terms 
+        | and confirm that I have read Klarna’s 
+        a(href='') Privacy Notice. 
+
+      input( type='submit', value='Apply Now' ).btn
+
+      p.fly By selecting placing the order, you are agreeing to our Terms and Conditions.
+
+block content
+
+block scripts
