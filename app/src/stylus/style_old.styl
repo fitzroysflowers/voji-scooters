@@ -86,7 +86,7 @@ p, a, li
   background-color alert-error-col !important
 
 .fly
-  font-size fly-size !important
+  font-size fly-size
   line-height small-size
 
 .bold
@@ -193,7 +193,7 @@ section
     top title-size*3
     left 0
     right 0
-    font-size large-size
+    font-size med-size
     text-align center
     text-transform uppercase
     color white
@@ -205,7 +205,6 @@ section
     color white
   .hero-logo
     position absolute
-    display none 
     top small-size
     width 100%
     height 40vw
@@ -221,8 +220,8 @@ section
     text-align center
     padding-bottom fly-size
     p
-      font-size med-size
-      line-height med-size*1.3
+      font-size large-size
+      line-height large-size
       color white
       text-transform uppercase
     .fly
@@ -238,29 +237,18 @@ section
       margin-bottom small-size
 
 #features
+  background-image url( /images/display/features.jpg )
+  background-repeat no-repeat
+  background-size contain
+  background-position center center
   h2
     font-size large-size
     text-align center
     text-transform uppercase
+    aspect(130%)
     color red
     span
       color black
-  ul
-    li
-      aspect(70%)
-      background-image url( /images/display/features1.jpg )
-      background-repeat no-repeat
-      background-size contain
-      background-position center center
-      width 100%
-      margin auto auto
-      &:nth-child(2)
-        background-image url( /images/display/features2.jpg )
-      h3
-        text-align center
-        font-weight 900
-        text-transform uppercase
-        margin-top title-size
 
 #pills
   padding small-size
@@ -579,18 +567,12 @@ section
   background-color white
   text-align center
   padding small-size
-  .address,
-  .links
-    li
-      p,a
-        font-size small-size
-        line-height large-size
-        color black
-  .address
-    margin-bottom small-size
+  p
+    font-size small-size
+    line-height small-size
+    color black
 
-form,
-#order-form
+form
   margin title-size*1.3 med-size
   text-align left !important
   .secure-icons
@@ -643,10 +625,10 @@ form,
     input[type=tel],
     input[type=email],
     input[type=date],
-    select,
-    textarea
+    textarea,
+    select
       display block
-      appearance normal
+      appearance none
       width 100%
       padding small-size
       background-color white
@@ -655,13 +637,12 @@ form,
       border solid thin background
       margin micro-size 0
       border-radius(3px)
-  #submit-btn
-    width 100% !important
-    &:disabled
-      background-color black
-  select
-    appearance none
-    padding med-size !important
+    input[type=submit]
+      btn()
+      width 100% !important
+    select
+      appearance none
+      padding med-size !important
 
 #select-colour
   text-align center
@@ -698,7 +679,6 @@ form,
     input[type=text],
     input[type=tel],
     input[type=email],
-    select,
     textarea
       display block
       appearance normal
@@ -712,7 +692,7 @@ form,
       border-radius(3px)
     input[type=submit]
       btn()
-      width 100%
+      width 100% !important
 
 #select-colour
   text-align center
@@ -766,14 +746,6 @@ form,
     border outset background thick
   #colourblack:checked ~ .order-colour li label[for=colourblack]
     border outset background thick
-  #colourwhite:checked ~ .blackscooter
-    display none
-  #colourwhite:checked ~ .whitescooter
-    display block
-  #colourblack:checked ~ .whitescooter
-    display none
-  #colourblack:checked ~ .blackscooter
-    display block
     
   .order-description
     position relative
@@ -803,38 +775,6 @@ form,
       left -100%
       height 100%
       width 100%
-
-#select-repayment
-  position relative
-  padding-bottom title-size
-  select
-    appearance( none )
-    padding small-size
-  ul
-    li
-      label
-        display block
-        border solid black thin
-        padding small-size
-        margin small-size 0
-        cursor pointer
-        p
-          margin 0 !important
-          padding 0
-        .total
-          position absolute
-          display none
-          bottom 0
-          font-size med-size
-
-      input[type=radio]
-        display none
-        &:checked + label
-          background-color black
-          color white
-          .total
-            display block
-            color black
 
 #add-address
   ul
@@ -897,7 +837,7 @@ form,
 input[ type='submit' ]
   display block
   background-color green !important
-  width 100%
+  width 100% !important
 
 #apply-msg
   text-align center
@@ -937,20 +877,17 @@ input[ type='submit' ]
 #show-payment-address:not(:checked) ~ #payment-address
   display block
 
+
 @media screen and ( orientation:landscape ) and ( min-width:1200px )
 
-  p, a, li
-    font small-size/small-size*1.33 font-corp
-
   form,
-  #order-form,
   .text-wrapper
     padding large-size
     padding-top title-size*2
     max-width 900px
     margin auto auto
     h2
-      font-size fly-size
+      font-size small-size
     p
       font-size fly-size
   .header
@@ -984,36 +921,26 @@ input[ type='submit' ]
     display none
 
   #hero
-    height 90vh
-    background-position 85% top, center 70% 
-    background-size auto 130%,  cover
-    h1
-      font-size large-size !important
-      line-height large-size
-      top title-size*2
-      left 10vw
-      width 40rem
-      text-align left
-      text-transform uppercase
-      color white
-    .hero-buy
-      display inline-block
-      width title-size*3 !important
-      margin-left 0
-      font-size fly-size
-      padding micro-size
-    .hero-logo
-      position absolute
-      display none
-      left title-size*3
-      width 2min
-      background-position left center
-      background-size 50%
+    .centred
+      max-width 900px
+      text-align center
+      h1
+        font-size small-size
+        text-align center
+        text-transform uppercase
+        color white
+      .hero-buy
+        display inline-block
+        width 40%
+        margin-left 0
+        font-size fly-size
+        padding micro-size
+      .hero-logo
+        height 10min
+        background-size 80%
     .hero-footer
-      bottom title-size*2
-      left 10vw
+      bottom fly-size
       padding-bottom 0
-      text-align left
       p
         font-size med-size
         line-height med-size
@@ -1021,44 +948,6 @@ input[ type='submit' ]
       .fly
         font-size fly-size
         line-height small-size
-
-  #features
-    ul
-      margin auto auto
-      li
-        display table-cell
-        aspect(50%)
-        width 50vw
-        background-size contain
-        &:nth-child(2)
-          background-position bottom
-        h3
-          top 0
-
-  #icons
-    ul
-      li
-        width 33vw
-
-  #pills
-    ul
-      li
-        width 25%
-
-  #gallery
-    .display
-      aspect(30%)
-      background-size contain
-
-  #difference
-    p
-      width 60rem
-      margin auto auto
-      text-align center
-      padding micro-size 0
-
-  #controls
-    display none
 
   #slide-env,  
   #slide-colour
@@ -1103,24 +992,3 @@ input[ type='submit' ]
     .text
       width 40%
       text-align left
-
-  .footer
-    background-color background
-    color white
-    text-align left
-    .social
-      float right
-      li
-        display inline-block
-    .links,
-    .address
-      display table-cell
-      text-align left
-      padding-right title-size
-      li
-        a, p
-          font-size fly-size
-          line-height small-size*1.5
-          color white
-    .fly
-      font-size micro-size !important
