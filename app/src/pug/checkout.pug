@@ -1,0 +1,184 @@
+extends layouts/layout
+
+block head
+  script( src='https://js.stripe.com/v3/' )
+  script( src="https://code.jquery.com/jquery-3.5.1.min.js", integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous" )
+  script(src="https://x.klarnacdn.net/kp/lib/v1/api.js", async='true')
+  script.
+    (function(h,o,t,j,a,r){
+    h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+    h._hjSettings={hjid:1863853,hjsv:6};
+    a=o.getElementsByTagName('head')[0];
+    r=o.createElement('script');r.async=1;
+    r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+    a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+
+block content
+  form#order-form  
+    .secure-icons
+    H1 Your Order
+    hr
+    p Thank you for deciding to place an order for a Voji scooter. We appreciate your custom. Please complete these 5 steps.
+    fieldset#select-colour
+      input(required, type="radio", name="scooter-colour", value="white", checked="checked" )#colourwhite
+      input(required, type="radio", name="scooter-colour", value="black" )#colourblack
+      legend Step 1:
+        span Colour Choice
+      p Please start by choosing the colour bike you would like.
+      ul.order-colour
+        li
+          label(for="colourwhite", data-col="white")
+        li
+          label(for="colourblack", data-col="black")
+      ul.order-description
+        li
+          label
+            p Mqi 250w scooter. Inc. 36V Battery, 2020 Model. 
+        li
+          label
+            p Quantity:
+            input( type='text', name='qty', value='1', disabled=true )#order-quantity
+        li
+          label
+            p Total: £
+              span#order-total 695.00
+        li
+          label
+            p Deliver to:
+              span UK Mainland
+        li
+          label
+            p Delivery:
+              span Free
+      p.fly *We are sorry but we are only able to deliver to the UK at the moment. Delivery to N.I, & the HIghlands and Islands will incur an extra charge
+    fieldset#add-address
+      legend Step 2:
+        span Contact Details
+      ul
+        li
+          label
+            p Title
+            select( name="billing_title" )
+              option(value="Mr") Mr
+              option(value="Mrs") Mrs
+              option(value="Ms") Ms
+              option(value="Miss") Miss
+        li
+          label
+            p First Name:
+            input(required, type="text", name="billing_fname" )
+        li                     
+          label               
+            p Last Name:     
+            input(required, type="text", name="billing_lname" )
+        li                      
+          label                 
+            p Mobile:           
+            input( type="tel", name="billing_phone" )
+        li                      
+          label                 
+            p Email:           
+            input( required, type="email", name="billing_email" )
+        li                      
+          label                 
+            p Date of Birth 
+              span.fly (only reqiured for instalment payments):           
+            input( required, type="date", name="dob" )
+    fieldset#add-address
+      legend Step 3:
+        span Payment Details
+      ul
+        li                      
+          label                
+            p Address:        
+            textarea( required, name="billing_address", rows="6" )
+        li                      
+          label                 
+            p City:             
+            input( required, type="text", name="billing_city" )
+        li                      
+          label                 
+            p Postcode:         
+            input( required, type="text", name="billing_postcode" )
+    fieldset#add-address
+      legend Step 4: 
+        span Delivery Details
+      ul
+        li
+          input( type='checkbox', name='useDelivery', checked='true' )#show-payment-address.toggle
+          label 
+          label( for='show-payment-address' ).fly  Use payment details for delivery address
+          ul#payment-address
+            li
+              label
+                p Title
+                select( name="shipping_title" )
+                  option(value="Mr") Mr
+                  option(value="Mrs") Mrs
+                  option(value="Ms") Ms
+                  option(value="Miss") Miss
+            li
+              label
+                p First Name:
+                input(type="text", name="shipping_fname" )
+            li                     
+              label               
+                p Last Name:     
+                input(type="text", name="shipping_lname" )
+            li                      
+              label                
+                p Address:        
+                textarea( name="shipping_address", rows="6" )
+            li                      
+              label                 
+                p City:             
+                input( type="text", name="shipping_city" )
+            li                      
+              label                 
+                p Postcode:         
+                input( type="text", name="shipping_postcode" )
+            li                      
+              label                 
+                p Mobile:           
+                input( type="tel", name="shipping_phone" )
+            li                      
+              label                 
+                p Email:           
+                input( type="email", name="shipping_email" )
+
+    fieldset#add-address
+      legend Step 5: 
+        span Payment Options
+      p Option 1: Pay in full by credit/debit card
+      p Option 2: Pay by instalments. From £5.95/ week
+      ul
+        li.stripe-option
+          #card-errors
+          label
+            p Card Number:
+          #card-number
+          label
+            p Expiry Date:
+          #card-expiry
+          label
+            p CVC:
+          #card-cvc
+          //-label
+            //-p Postcode:
+          //-#postal-code
+          p I confirm that I have read your
+            a(href='/terms.html').underline.fly  Terms and Conditions
+          input( type="checkbox", name="terms")#order-terms.toggle
+          label(for="order-terms")
+          label(for="order-terms").fly  Please tick to confirm  
+          input( type='submit', value='Buy Now For £695.00' )#submit-btn.btn
+
+        li.klarna-option
+          #klarna-payments-container
+          input( type="submit", value="Apply for Klarna", disabled='disabled' )#apply-btn.btn 
+
+block scripts
+  script( type='text/javascript', src='/js/klarna.js', async='true' )
+  script( type='text/javascript', src='/js/required-validation.js' )
+  script( type='text/javascript', src='/js/order.js?version=3' )

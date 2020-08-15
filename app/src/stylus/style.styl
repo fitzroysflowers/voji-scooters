@@ -8,7 +8,7 @@ html
   font-size 120%
   min-height 100vh
 
-div, a, form, input, textarea, section, article, ul, li, label
+div, a, form, input, textarea, section, article, ul, li, label, select, date
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -26,6 +26,58 @@ a
 
 .underline
   text-decoration underline
+
+.toggle
+  display none
+.toggle + label
+  position relative
+  display inline-block
+  height med-size*1.4
+  background-color background*0.7
+  border-radius(med-size)
+  box-shadow inset 0 0 5px alert-error-col*0.5
+  vertical-align middle
+  margin micro-size 0
+  &::before
+    content ''
+    height med-size*1
+    width med-size*1
+    margin fly-size*0.3
+    border-radius(med-size)
+    float left
+  &::after
+    content attr(data-label)
+    margin fly-size
+    margin-right med-size*1.4
+    white-space nowrap
+    height 100%
+    line-height small-size
+    color background*4
+    font-size fly-size
+    font-weight 600
+    text-transform uppercase
+    text-align left
+.toggle + label
+  background-color #eee
+  & + p
+    display inline-block
+    margin-left small-size
+.toggle:checked + label
+  background-color #eee
+  box-shadow inset 0 0 3px alert-info-col*0.5
+.toggle:checked + label::before
+  background-color alert-info-col
+  float right
+.toggle:checked + label::after
+  color alert-info-col*6
+  margin-left med-size*1.4
+  margin-right fly-size
+.toggle:not(:checked) + label
+  box-shadow inset 0 0 3px background
+.toggle:not(:checked) + label::before
+  background-color background*1.6
+
+
 
 p, a, li
   font med-size/med-size*1.33 font-corp
@@ -572,9 +624,11 @@ form
     input[type=text],
     input[type=tel],
     input[type=email],
-    textarea
+    input[type=date],
+    textarea,
+    select
       display block
-      appearance normal
+      appearance none
       width 100%
       padding small-size
       background-color white
@@ -586,6 +640,9 @@ form
     input[type=submit]
       btn()
       width 100% !important
+    select
+      appearance none
+      padding med-size !important
 
 #select-colour
   text-align center
@@ -635,7 +692,7 @@ form
       border-radius(3px)
     input[type=submit]
       btn()
-      width 100%
+      width 100% !important
 
 #select-colour
   text-align center
@@ -780,7 +837,7 @@ form
 input[ type='submit' ]
   display block
   background-color green !important
-  width 100%
+  width 100% !important
 
 #apply-msg
   text-align center
@@ -810,6 +867,16 @@ input[ type='submit' ]
       content '\f09a'
       font-family 'fontawesome-brands'
       font-size large-size
+
+#klarna-payments-container
+  width 100% !important
+
+#payment-address
+  display none
+
+#show-payment-address:not(:checked) ~ #payment-address
+  display block
+
 
 @media screen and ( orientation:landscape ) and ( min-width:1200px )
 
