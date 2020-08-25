@@ -6,10 +6,15 @@
       this.widgetContainer = this.config.widgetContainer;
       this.orderForm = this.config.orderForm;
       this.applyBtn = this.config.applyBtn;
+      this.paymentOptionsWrapper = this.config.paymentOptionsWrapper
+      this.klarnaOption = this.config.klarnaOption
+      this.stripeOption = this.config.stripeOption
+      this.cardRadio = this.config.cardRadio
       this.origin = window.location.origin;
-      this.klarnaPath = 'https://api.playground.klarna.com/payments/v1';
-      this.auth = 'UEsyMTEyOV9lMWQ2MDc5NGNiMDU6aTJRakpncU1iN3VHbUZKdw==';
+      this.klarnaPath = 'https://c4syibmg0i.execute-api.eu-west-2.amazonaws.com';
       this.payCategory = 'pay_later';
+      this.selectedPaymentMethod = ''
+      this.sessionResponse = {}
       this.callSession();
       this.applyBtn.removeAttribute('disabled');
       this.bind();
@@ -71,39 +76,89 @@
       return '';
     },
 
-    klarnaAsyncCallback: function( sessionId, clientToken, paymentMethodCategories, showForm ) {
+    klarnaAsyncCallback: function() {
+      var that = this
       Klarna.Payments.init( {
-        "client_token": clientToken
+        "client_token": that.sessionResponse.client_token
       } )
 
       Klarna.Payments.load( {
         container: '#klarna-payments-container'
-        , payment_method_category: this.payCategory
+        , payment_method_category: that.selectedPaymentMethod
       }, function( res ) {
       } )
 
-      if( showForm ) this.widgetContainer.style.display = 'block';
+      if( this.sessionResponse.showForm ) this.widgetContainer.style.display = 'block';
       else this.widgetContainer.style.display = 'block';
+    },
+
+    hideKlarna: function(e) {
+      this.klarnaOption.style.display = "none";
+      this.stripeOption.style.display = 'block';
+    },
+
+    selectPaymentMethod: function(e) {
+      var target = e.target
+      this.selectedPaymentMethod = target.value
+      this.stripeOption.style.display = 'none';
+      this.klarnaOption.style.display = 'block'
+      this.klarnaAsyncCallback()
+    },
+
+    displayPaymentMethods: function() {
+      var that = this
+        , methods = this.sessionResponse.payment_method_categories
+
+      console.debug(this.sessionResponse)
+
+      methods.forEach( function( method ) {
+        var li = document.createElement('li')
+          , radio = document.createElement('input')
+          , label = document.createElement('label')
+          , textLabel = document.createElement('label')
+
+        li.classList.add('klarna')
+
+        radio.setAttribute('type', 'radio')
+        radio.setAttribute('name', 'payment_method')
+        radio.setAttribute('id', method.identifier)
+        radio.setAttribute('value', method.identifier)
+        radio.classList.add('toggle')
+
+        label.setAttribute('for', method.identifier)
+
+        textLabel.setAttribute('for', method.identifier)
+        textLabel.innerHTML = method.name
+
+        li.appendChild( radio )
+        li.appendChild( label )
+        li.appendChild( textLabel )
+
+        that.paymentOptionsWrapper.appendChild( li )
+        
+        radio.addEventListener('click', that.selectPaymentMethod.bind(that))
+
+      } )
     },
 
     callSession: function() {
       var that = this
         , xhr = new XMLHttpRequest()
-        , action = this.klarnaPath + '/sessions'
+        , action = this.klarnaPath + '/session'
         , klarnaSession = this.readCookie( 'voji-klarna-session' )
         , data = {
           "purchase_country": "GB"
           , "purchase_currency": "GBP" 
           , "locale": "en-GB"
-          , "order_amount": 69500
+          , "order_amount": 692.50
           , "order_lines": [ {
             "type": "physical"
             , "reference": "scooter"
             , "name": "scooter-name"
             , "quantity": 1
-            , "unit_price": 69500
+            , "unit_price": 692.50
             , "tax_rate": 0
-            , "total_amount": 69500
+            , "total_amount": 692.50
             , "total_discount_amount": 0
             , "total_tax_amount": 0
           } ]
@@ -112,14 +167,13 @@
       if( !klarnaSession ) {
         xhr.open( 'POST', action, true );
         xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-        xhr.setRequestHeader('Authorization', 'Basic ' + this.auth);
         xhr.send( JSON.stringify( data ) );
         xhr.onreadystatechange = function() {
           if( xhr.readyState === 4 ) {
             if( xhr.status === 200 ) {
-              var response = JSON.parse( xhr.response )
-              that.writeCookie( 'voji-klarna-session', response.session_id, 4 )
-              that.klarnaAsyncCallback( response.session_id, response.client_token, response.payment_method_categories, response.show_form ) 
+              that.sessionResponse = JSON.parse( xhr.response )
+              that.writeCookie( 'voji-klarna-session', that.sessionResponse.session_id, 4 )
+              that.displayPaymentMethods()
             } else {
               return alert( 'Ooops there was a problem' );
             }
@@ -129,34 +183,31 @@
       } else {
         xhr.open( 'GET', action + '/' + klarnaSession, true );
         xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-        xhr.setRequestHeader('Authorization', 'Basic ' + this.auth);
         xhr.send()
         xhr.onreadystatechange = function() {
           if( xhr.readyState === 4 ) {
             if( xhr.status === 200 ) {
-              var response = JSON.parse( xhr.response )
-              that.klarnaAsyncCallback( response.session_id, response.client_token, response.payment_method_categories, response.show_form ) 
+              that.sessionResponse = JSON.parse( xhr.response )
+              that.displayPaymentMethods()
             } else {
               return alert( 'Ooops there was a problem' );
             }
           }
         };
-
       }
     },
 
     order: function( token, authorizeData ) {
       var that = this
         , xhr = new XMLHttpRequest()
-        , action = this.klarnaPath + '/authorizations/' + token + '/order';
+        , action = this.klarnaPath + '/order/' + token;
 
       authorizeData['merchant_urls'] = {
         "confirmation": this.origin + "/success.html"
       }
 
-      xhr.open( 'POST', action );
+      xhr.open( 'POST', action, true );
       xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-      xhr.setRequestHeader('Authorization', 'Basic ' + this.auth);
       xhr.send( JSON.stringify( authorizeData ) );
       xhr.onreadystatechange = function() {
         if( xhr.readyState === 4 ) {
@@ -242,6 +293,7 @@
 
     bind: function() {
       this.applyBtn.addEventListener( 'click', this.authorize.bind(this) )
+      this.cardRadio.addEventListener( 'click', this.hideKlarna.bind(this) )
     }
   }
 
@@ -249,6 +301,10 @@
     widgetContainer: document.getElementById('klarna-payments-container')
     , orderForm: document.getElementById('order-form')
     , applyBtn: document.getElementById('apply-btn')
+    , paymentOptionsWrapper: document.getElementById('payment-options-wrapper')
+    , cardRadio: document.getElementById('card-payment')
+    , klarnaOption: document.getElementById('klarna-option')
+    , stripeOption: document.getElementById('stripe-option')
   })
 
 } )( window.Klarna )

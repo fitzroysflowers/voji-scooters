@@ -21,14 +21,14 @@ block content
     hr
     p Thank you for deciding to place an order for a Voji scooter. We appreciate your custom. Please complete these 5 steps.
     fieldset#select-colour
-      input(required, type="radio", name="scooter-colour", value="white", checked="checked" )#colourwhite
-      input(required, type="radio", name="scooter-colour", value="black" )#colourblack
+      input(required, type="radio", name="scooter-colour", value="black", checked="checked" )#colourblack
+      input(required, type="radio", name="scooter-colour", value="white", disabled=true )#colourwhite
       legend Step 1:
         span Colour Choice
-      p Please start by choosing the colour bike you would like.
+      p Please start by choosing the colour scooter you would like.
       ul.order-colour
         li
-          label(for="colourwhite", data-col="white")
+          label(for="colourwhite", data-col="out of stock")
         li
           label(for="colourblack", data-col="black")
       ul.order-description
@@ -42,7 +42,7 @@ block content
         li
           label
             p Total: £
-              span#order-total 695.00
+              span#order-total 692.50
         li
           label
             p Deliver to:
@@ -51,7 +51,7 @@ block content
           label
             p Delivery:
               span Free
-      p.fly *We are sorry but we are only able to deliver to the UK at the moment. Delivery to N.I, & the HIghlands and Islands will incur an extra charge
+      p.fly *We are sorry but we are only able to deliver to the UK at the moment. Delivery to N.I, & the Highlands and Islands will incur an extra charge
     fieldset#add-address
       legend Step 2:
         span Contact Details
@@ -66,40 +66,40 @@ block content
               option(value="Miss") Miss
         li
           label
-            p First Name:
+            p First Name
             input(required, type="text", name="billing_fname" )
         li                     
           label               
-            p Last Name:     
+            p Last Name     
             input(required, type="text", name="billing_lname" )
         li                      
           label                 
-            p Mobile:           
+            p Mobile       
             input( type="tel", name="billing_phone" )
         li                      
           label                 
-            p Email:           
+            p Email          
             input( required, type="email", name="billing_email" )
         li                      
           label                 
-            p Date of Birth 
-              span.fly (only reqiured for instalment payments):           
+            p Date of Birth
             input( required, type="date", name="dob" )
+            p.fly only required for instalment plans
     fieldset#add-address
       legend Step 3:
         span Payment Details
       ul
         li                      
           label                
-            p Address:        
+            p Address
             textarea( required, name="billing_address", rows="6" )
         li                      
           label                 
-            p City:             
+            p City         
             input( required, type="text", name="billing_city" )
         li                      
           label                 
-            p Postcode:         
+            p Postcode    
             input( required, type="text", name="billing_postcode" )
     fieldset#add-address
       legend Step 4: 
@@ -120,49 +120,53 @@ block content
                   option(value="Miss") Miss
             li
               label
-                p First Name:
+                p First Name
                 input(type="text", name="shipping_fname" )
             li                     
               label               
-                p Last Name:     
+                p Last Name     
                 input(type="text", name="shipping_lname" )
             li                      
               label                
-                p Address:        
+                p Address    
                 textarea( name="shipping_address", rows="6" )
             li                      
               label                 
-                p City:             
+                p City          
                 input( type="text", name="shipping_city" )
             li                      
               label                 
-                p Postcode:         
+                p Postcode        
                 input( type="text", name="shipping_postcode" )
             li                      
               label                 
-                p Mobile:           
+                p Mobile           
                 input( type="tel", name="shipping_phone" )
             li                      
               label                 
-                p Email:           
+                p Email           
                 input( type="email", name="shipping_email" )
 
-    fieldset#add-address
+    fieldset#payment
       legend Step 5: 
         span Payment Options
-      p Option 1: Pay in full by credit/debit card
-      p Option 2: Pay by instalments. From £5.95/ week
+
+      ul#payment-options-wrapper
+        li.ccard
+          input( type='radio', name='payment_method' )#card-payment.toggle
+          label( for='card-payment' )
+          label( for='card-payment' ) Pay by credit card
       ul
-        li.stripe-option
+        li#stripe-option
           #card-errors
           label
-            p Card Number:
+            p Card Number
           #card-number
           label
-            p Expiry Date:
+            p Expiry Date
           #card-expiry
           label
-            p CVC:
+            p CVC
           #card-cvc
           //-label
             //-p Postcode:
@@ -172,9 +176,9 @@ block content
           input( type="checkbox", name="terms")#order-terms.toggle
           label(for="order-terms")
           label(for="order-terms").fly  Please tick to confirm  
-          input( type='submit', value='Buy Now For £695.00' )#submit-btn.btn
+          input( type='submit', value='Buy Now For £692.50' )#submit-btn.btn
 
-        li.klarna-option
+        li#klarna-option
           #klarna-payments-container
           input( type="submit", value="Apply for Klarna", disabled='disabled' )#apply-btn.btn 
 
