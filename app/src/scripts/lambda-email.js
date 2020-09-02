@@ -30,7 +30,7 @@
       xhr.onreadystatechange = function() {
         if( xhr.readyState === 4 ) {
           if( xhr.status === 200 ) {
-            window.location.href='/success.html'
+            window.location.href='/thankyou.html'
             //return alert( 'Thank you. We will be in-touch shortly' );
           } else {
             window.location.href='/failure.html'

@@ -1,6 +1,6 @@
 ( function( Klarna ) {
 
-  var klarna = {
+  var klarnaApp = {
     init: function( config ) {
       this.config = config;
       this.widgetContainer = this.config.widgetContainer;
@@ -10,9 +10,10 @@
       this.klarnaOption = this.config.klarnaOption
       this.stripeOption = this.config.stripeOption
       this.cardRadio = this.config.cardRadio
+      this.unitPrice = 69250
       this.origin = window.location.origin;
       this.klarnaPath = 'https://c4syibmg0i.execute-api.eu-west-2.amazonaws.com';
-      this.payCategory = 'pay_later';
+      this.payCategory = 'pay_over_time';
       this.selectedPaymentMethod = ''
       this.sessionResponse = {}
       this.callSession();
@@ -78,18 +79,22 @@
 
     klarnaAsyncCallback: function() {
       var that = this
-      Klarna.Payments.init( {
-        "client_token": that.sessionResponse.client_token
-      } )
+        , klarnaInit = {
+            "client_token": this.sessionResponse.client_token 
+          }
+        , klarnaLoad = {
+          container: '#klarna-payments-container'
+          , payment_method_category: this.selectedPaymentMethod   
+        }
+        , klarnaOption = this.klarnaOption;
 
-      Klarna.Payments.load( {
-        container: '#klarna-payments-container'
-        , payment_method_category: that.selectedPaymentMethod
-      }, function( res ) {
+      Klarna.Payments.init( klarnaInit )
+      Klarna.Payments.load( klarnaLoad, function( res ) {
+        if( res.error ) alert( res.error.invalid_fields.join(' + ') )
+        if( res.show_form ) klarnaOption.style.display = 'block';
+        else widget.style.display = 'none';
+        that.applyBtn.style.display = 'block'
       } )
-
-      if( this.sessionResponse.showForm ) this.widgetContainer.style.display = 'block';
-      else this.widgetContainer.style.display = 'block';
     },
 
     hideKlarna: function(e) {
@@ -101,15 +106,12 @@
       var target = e.target
       this.selectedPaymentMethod = target.value
       this.stripeOption.style.display = 'none';
-      this.klarnaOption.style.display = 'block'
       this.klarnaAsyncCallback()
     },
 
     displayPaymentMethods: function() {
       var that = this
         , methods = this.sessionResponse.payment_method_categories
-
-      console.debug(this.sessionResponse)
 
       methods.forEach( function( method ) {
         var li = document.createElement('li')
@@ -150,15 +152,15 @@
           "purchase_country": "GB"
           , "purchase_currency": "GBP" 
           , "locale": "en-GB"
-          , "order_amount": 692.50
+          , "order_amount": this.unitPrice
           , "order_lines": [ {
             "type": "physical"
             , "reference": "scooter"
             , "name": "scooter-name"
             , "quantity": 1
-            , "unit_price": 692.50
+            , "unit_price": this.unitPrice
             , "tax_rate": 0
-            , "total_amount": 692.50
+            , "total_amount": this.unitPrice
             , "total_discount_amount": 0
             , "total_tax_amount": 0
           } ]
@@ -227,18 +229,40 @@
       var that = this
         , formData = this.serialize( this.orderForm )
         , updateCategory = this.payCategory
-        , formatedDob = new Date(formData['dob']).toISOString().slice(0,10)
-        , orderLines = {
-            "type": "physical"
-            , "reference": "scooter"
-            , "name": formData["scooter-colour"] + ' scooter'
-            , "quantity": 1
-            , "unit_price": 69500
-            , "tax_rate": 0
-            , "total_amount": 69500
-            , "total_discount_amount": 0
-            , "total_tax_amount": 0
+        , missingFields = []
+        , requiredFields = [
+          'billing_fname'
+          , 'billing_lname'
+          , 'billing_email'
+          , 'billing_title'
+          , 'billing_address'
+          , 'billing_postcode'
+          , 'billing_city'
+          , 'billing_phone'
+          , 'dob'
+        ]
+        , orderLines = [ {
+           "name":"Shipping Fee",
+           "quantity":1,
+           "quantity_unit":"pcs",
+           "reference":"shippingfee",
+           "total_amount":0,
+           "type":"physical",
+           "unit_price":0
           }
+          , {
+          "type": "physical"
+          , "reference": "scooter"
+          , "name": formData["scooter-colour"] + ' scooter'
+          , "quantity": 1
+          , "unit_price": this.unitPrice
+          , "tax_rate": 0
+          , "total_amount": this.unitPrice
+          , "total_discount_amount": 0
+          , "total_tax_amount": 0
+          , "product_url": this.origin 
+          , "image_url": this.origin + "/images/svg/vmax_colour.svg"
+        } ]
         , authorizeData = {
           purchase_country: "GB"
           , purchase_currency: "GBP"
@@ -269,22 +293,42 @@
             , phone: formData['shipping_phone'] || formData['billing_phone']
             , country: "GB"
           }
-          , order_amount: 69500
+          , order_amount: this.unitPrice
           , order_tax_amount: 0
-          , order_lines: [ orderLines ]
+          , order_lines: orderLines
           , customer: {
-            date_of_birth: formatedDob
           }
-          };
+        };
+
+      requiredFields.forEach( function(m) {
+        if( formData[m] == '' ) missingFields.push(m)
+      } )
+
+      if( missingFields.length > 0 ) { 
+        this.applyBtn.removeAttribute('disabled')
+        return alert( 'please complete missing fields: ' + missingFields.join( ' + ' ) )
+      }
+
+      if( formData.dob ) { 
+        authorizeData.customer['date_of_birth'] = new Date(formData['dob']).toISOString().slice(0,10)
+        this.applyBtn.value = 'Processing application. Please wait'
+        this.applyBtn.classList.add('processing')
+      } else { 
+        this.applyBtn.removeAttribute('disabled')
+        return alert('Please complete the Date of Birth input')
+      }
 
       Klarna.Payments.authorize( {
-        payment_method_category: this.payCategory
+        payment_method_category: that.payCategory
       }, authorizeData, function( res ) {
-        if( !res.show_form ) { 
-          widgetContainer.style.display = none;
-        
-        } else if( res.show_form && !res.approved ) {
-          alert( 'Sorry but your application has not been approved. Please check your details and try again' )
+        if( res.error ) alert( error.toString() )
+        if( res.show_form === false && res.approved === false ) { 
+          that.klarnaOption.style.display = 'none';
+          alert( 'Sorry but your application has not been approved.' )
+        } else if( res.show_form === true && res.approved === false ) {
+          that.applyBtn.classList.remove('processing')
+          that.applyBtn.value = 'Apply for Klarna'
+          that.applyBtn.removeAttribute('disabled');
         } else {
           that.order( res.authorization_token, authorizeData );
         }
@@ -297,7 +341,7 @@
     }
   }
 
-  klarna.init({
+  klarnaApp.init({
     widgetContainer: document.getElementById('klarna-payments-container')
     , orderForm: document.getElementById('order-form')
     , applyBtn: document.getElementById('apply-btn')
