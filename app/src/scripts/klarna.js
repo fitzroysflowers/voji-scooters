@@ -14,7 +14,6 @@
       this.origin = window.location.origin;
       this.klarnaPath = 'https://c4syibmg0i.execute-api.eu-west-2.amazonaws.com';
       this.payCategory = 'pay_over_time';
-      this.selectedPaymentMethod = ''
       this.sessionResponse = {}
       this.callSession();
       this.applyBtn.removeAttribute('disabled');
@@ -84,7 +83,7 @@
           }
         , klarnaLoad = {
           container: '#klarna-payments-container'
-          , payment_method_category: this.selectedPaymentMethod   
+          , payment_method_category: this.payCategory   
         }
         , klarnaOption = this.klarnaOption;
 
@@ -104,14 +103,17 @@
 
     selectPaymentMethod: function(e) {
       var target = e.target
-      this.selectedPaymentMethod = target.value
+      this.payCategory = target.value
       this.stripeOption.style.display = 'none';
       this.klarnaAsyncCallback()
     },
 
     displayPaymentMethods: function() {
       var that = this
-        , methods = this.sessionResponse.payment_method_categories
+        , methods = this.sessionResponse.payment_method_categories;
+
+      this.klarnaAsyncCallback();
+      this.klarnaOption.style.display = "block";
 
       methods.forEach( function( method ) {
         var li = document.createElement('li')
@@ -125,6 +127,7 @@
         radio.setAttribute('name', 'payment_method')
         radio.setAttribute('id', method.identifier)
         radio.setAttribute('value', method.identifier)
+        radio.setAttribute('checked', true)
         radio.classList.add('toggle')
 
         label.setAttribute('for', method.identifier)
